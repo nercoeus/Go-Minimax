@@ -3,10 +3,11 @@ package minimax
 import (
 	"context"
 	"errors"
-	textv1 "github.com/ConnectAI-E/go-minimax/gen/go/minimax/text/v1"
-	"github.com/ConnectAI-E/go-minimax/internal"
-	"google.golang.org/grpc"
 	"io"
+
+	textv1 "github.com/nercoeus/go-minimax/gen/go/minimax/text/v1"
+	"github.com/nercoeus/go-minimax/internal"
+	"google.golang.org/grpc"
 )
 
 var _ textv1.MinimaxServiceClient = new(Client)

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package minimax.text.v1;
 
-option go_package = "github.com/ConnectAI-E/go-minimax/gen/go/minimax/text/v1;text";
+option go_package = "github.com/nercoeus/go-minimax/gen/go/minimax/text/v1;text";
 option java_multiple_files = true;
 option java_outer_classname = "minimaxProto";
 option java_package = "com.qiniai.minimax.text.v1";

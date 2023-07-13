@@ -5,9 +5,10 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"github.com/ConnectAI-E/go-minimax/pkg/errors"
 	"io"
 	"net/http"
+
+	"github.com/nercoeus/go-minimax/pkg/errors"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
