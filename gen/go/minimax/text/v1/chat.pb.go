@@ -164,6 +164,7 @@ type ChatCompletionsRequest struct {
 	TopP        float32    `protobuf:"fixed32,10,opt,name=top_p,json=topP,proto3" json:"top_p,omitempty"`
 	// 对输出中易涉及隐私问题的文本信息进行脱敏，目前包括但不限于邮箱、域名、链接、证件号、家庭住址等，默认false，即开启脱敏 默认false
 	SkipInfoMask bool `protobuf:"varint,11,opt,name=skip_info_mask,json=skipInfoMask,proto3" json:"skip_info_mask,omitempty"`
+	TokensToGenerate    int32 `protobuf:"varint,12,opt,name=tokens_to_generate,proto3" json:"tokens_to_generate,omitempty"`
 }
 
 func (x *ChatCompletionsRequest) Reset() {
