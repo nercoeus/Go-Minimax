@@ -1,4 +1,4 @@
-module github.com/ConnectAI-E/go-minimax
+module github.com/nercoeus/go-minimax
 
 go 1.20
 
