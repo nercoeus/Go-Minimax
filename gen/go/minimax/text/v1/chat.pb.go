@@ -285,8 +285,6 @@ type Choice struct {
 	Text string `protobuf:"bytes,1,opt,name=text,proto3" json:"text,omitempty"`
 	// 排名
 	Index int64 `protobuf:"varint,2,opt,name=index,proto3" json:"index,omitempty"`
-	// 分数
-	Logprobes int64 `protobuf:"varint,3,opt,name=logprobes,proto3" json:"logprobes,omitempty"`
 	// 结束原因，枚举值
 	// stop：API返回了模型生成的完整结果
 	// length：模型生成结果超过tokens_to_generate的长度，内容被截断
@@ -340,13 +338,6 @@ func (x *Choice) GetText() string {
 func (x *Choice) GetIndex() int64 {
 	if x != nil {
 		return x.Index
-	}
-	return 0
-}
-
-func (x *Choice) GetLogprobes() int64 {
-	if x != nil {
-		return x.Logprobes
 	}
 	return 0
 }
