@@ -21,7 +21,7 @@ func (cli *Client) ChatCompletions(ctx context.Context, in *textv1.ChatCompletio
 	resp, err := cli.client.R().
 		SetBody(in).
 		SetSuccessResult(res).
-		Post("/v1/text/chatcompletion")
+		Post(cli.apiPath)
 	if err != nil {
 		return nil, err
 	}
@@ -40,7 +40,7 @@ func (cli *Client) ChatCompletionStream(ctx context.Context, in *textv1.ChatComp
 	resp, err := cli.client.R().
 		DisableAutoReadResponse().
 		SetBody(in).
-		Post("/v1/text/chatcompletion")
+		Post(cli.apiPath)
 
 	if resp.StatusCode != 200 {
 		body, err := io.ReadAll(resp.Body)
