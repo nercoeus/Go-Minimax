@@ -19,8 +19,7 @@ var headerData = []byte("data: ")
 type StreamReader[T any] interface {
 	Recv() (response T, err error)
 	Close()
-	SetTraceID(s string)
-	GetTraceID() string
+	SetHeader(key string, val string)
 
 	grpc.ClientStream
 }
@@ -28,7 +27,7 @@ type StreamReader[T any] interface {
 type streamReader[T any] struct {
 	emptyMessagesLimit uint
 	isFinished         bool
-	traceID            string
+	header             metadata.MD
 
 	reader   *bufio.Reader
 	response *http.Response
@@ -83,12 +82,8 @@ func (stream *streamReader[T]) Close() {
 	stream.response.Body.Close()
 }
 
-func (stream *streamReader[T]) SetTraceID(traceID string) {
-	stream.traceID = traceID
-}
-
-func (stream *streamReader[T]) GetTraceID() string {
-	return stream.traceID
+func (stream *streamReader[T]) SetHeader(key string, val string) {
+	stream.header = metadata.Pairs(key, val)
 }
 
 // Header returns the header metadata received from the server if there

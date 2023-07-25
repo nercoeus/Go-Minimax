@@ -50,6 +50,6 @@ func (cli *Client) ChatCompletionStream(ctx context.Context, in *textv1.ChatComp
 		return nil, errors.New(string(body))
 	}
 	result := internal.NewStreamReader[*textv1.ChatCompletionsResponse](resp.Body)
-	result.SetTraceID(resp.Header.Get("Trace-Id"))
+	result.SetHeader("Trace-Id", resp.Header.Get("Trace-Id"))
 	return result, err
 }
