@@ -145,4 +145,5 @@ message ChatCompletionsResponse {
   //错误状态码和详情
   BaseResponse base_resp = 8;
   FunctionCall function_call = 9;
+  string trace_id = 10;
 }

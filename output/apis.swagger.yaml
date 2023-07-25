@@ -196,6 +196,8 @@ definitions:
         title: 错误状态码和详情
       functionCall:
         $ref: '#/definitions/v1FunctionCall'
+      traceId:
+        type: string
   v1Choice:
     type: object
     properties:

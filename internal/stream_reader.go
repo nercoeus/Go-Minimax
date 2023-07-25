@@ -19,6 +19,8 @@ var headerData = []byte("data: ")
 type StreamReader[T any] interface {
 	Recv() (response T, err error)
 	Close()
+	SetTraceID(s string)
+	GetTraceID() string
 
 	grpc.ClientStream
 }
@@ -26,6 +28,7 @@ type StreamReader[T any] interface {
 type streamReader[T any] struct {
 	emptyMessagesLimit uint
 	isFinished         bool
+	traceID            string
 
 	reader   *bufio.Reader
 	response *http.Response
@@ -78,6 +81,14 @@ waitForData:
 
 func (stream *streamReader[T]) Close() {
 	stream.response.Body.Close()
+}
+
+func (stream *streamReader[T]) SetTraceID(traceID string) {
+	stream.traceID = traceID
+}
+
+func (stream *streamReader[T]) GetTraceID() string {
+	return stream.traceID
 }
 
 // Header returns the header metadata received from the server if there

@@ -29,7 +29,7 @@ func (cli *Client) ChatCompletions(ctx context.Context, in *textv1.ChatCompletio
 	if resp.StatusCode != 200 {
 		return nil, err
 	}
-
+	res.ChatCompletionsResponse.TraceId = resp.Header.Get("Trace-Id")
 	return &res.ChatCompletionsResponse, err
 }
 
@@ -49,6 +49,7 @@ func (cli *Client) ChatCompletionStream(ctx context.Context, in *textv1.ChatComp
 		}
 		return nil, errors.New(string(body))
 	}
-
-	return internal.NewStreamReader[*textv1.ChatCompletionsResponse](resp.Body), err
+	result := internal.NewStreamReader[*textv1.ChatCompletionsResponse](resp.Body)
+	result.SetTraceID(resp.Header.Get("Trace-Id"))
+	return result, err
 }
