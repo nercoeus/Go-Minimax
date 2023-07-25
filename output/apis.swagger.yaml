@@ -229,27 +229,6 @@ definitions:
         items:
           type: object
           $ref: '#/definitions/v1Message'
-  v1Definition:
-    type: object
-    properties:
-      type:
-        type: string
-      description:
-        type: string
-      properties:
-        type: object
-        additionalProperties:
-          $ref: '#/definitions/v1Definition'
-      enum:
-        type: array
-        items:
-          type: string
-      required:
-        type: array
-        items:
-          type: string
-      items:
-        $ref: '#/definitions/v1Definition'
   v1FunctionCall:
     type: object
     properties:
@@ -265,7 +244,7 @@ definitions:
       description:
         type: string
       parameters:
-        $ref: '#/definitions/v1Definition'
+        $ref: '#/definitions/v1Parameters'
   v1Message:
     type: object
     properties:
@@ -282,6 +261,29 @@ definitions:
         type: string
       functionCall:
         $ref: '#/definitions/v1FunctionCall'
+  v1Parameters:
+    type: object
+    properties:
+      title:
+        type: string
+      type:
+        type: string
+      description:
+        type: string
+      properties:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/v1Parameters'
+      enum:
+        type: array
+        items:
+          type: string
+      required:
+        type: array
+        items:
+          type: string
+      items:
+        $ref: '#/definitions/v1Parameters'
   v1ReplyConstraints:
     type: object
     properties:

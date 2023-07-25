@@ -71,19 +71,20 @@ message FunctionCall {
 	string arguments = 2;
 }
 
-message Definition {
-	string type = 1;
-  string description = 2;
-  map<string, Definition> properties = 3;
-	repeated string enum = 4;
-	repeated string required = 5;
-	Definition items = 6;
+message Parameters {
+  string title = 1;
+	string type = 2;
+  string description = 3;
+  map<string, Parameters> properties = 4;
+	repeated string enum = 5;
+	repeated string required = 6;
+	Parameters items = 7;
 }
 
 message FunctionDefinition {
 	string name = 1;
 	string description = 2;
-	Definition parameters = 3;
+	Parameters parameters = 3;
 }
 
 message Choice {
