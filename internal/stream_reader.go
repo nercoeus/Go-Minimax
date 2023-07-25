@@ -89,14 +89,14 @@ func (stream *streamReader[T]) SetHeader(key string, val string) {
 // Header returns the header metadata received from the server if there
 // is any. It blocks if the metadata is not ready to read.
 func (stream *streamReader[T]) Header() (metadata.MD, error) {
-	return nil, nil
+	return stream.header, nil
 }
 
 // Trailer returns the trailer metadata from the server, if there is any.
 // It must only be called after stream.CloseAndRecv has returned, or
 // stream.Recv has returned a non-nil error (including io.EOF).
 func (stream *streamReader[T]) Trailer() metadata.MD {
-	return nil
+	return stream.header
 }
 
 // CloseSend closes the send direction of the stream. It closes the stream
