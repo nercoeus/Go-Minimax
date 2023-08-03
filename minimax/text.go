@@ -3,6 +3,7 @@ package minimax
 import (
 	"context"
 	"errors"
+	"fmt"
 	"io"
 
 	textv1 "github.com/nercoeus/go-minimax/gen/go/minimax/text/v1"
@@ -27,7 +28,7 @@ func (cli *Client) ChatCompletions(ctx context.Context, in *textv1.ChatCompletio
 	}
 
 	if resp.StatusCode != 200 {
-		return nil, err
+		return nil, fmt.Errorf("invalid StatusCode: %d", resp.StatusCode)
 	}
 	res.ChatCompletionsResponse.TraceId = resp.Header.Get("Trace-Id")
 	return &res.ChatCompletionsResponse, err

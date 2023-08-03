@@ -24,8 +24,8 @@ func main() {
 		Messages: []*textv1.Message{
 			{
 				SenderType: "USER",
-				SenderName: "yuna",
-				Text:       "What is the weather like in Boston?",
+				// SenderName: "yuna",
+				Text: "What is the weather like in Boston?",
 			},
 			{
 				SenderType: "BOT",
