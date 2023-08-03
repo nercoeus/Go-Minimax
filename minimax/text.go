@@ -28,7 +28,7 @@ func (cli *Client) ChatCompletions(ctx context.Context, in *textv1.ChatCompletio
 	}
 
 	if resp.StatusCode != 200 {
-		return nil, fmt.Errorf("invalid StatusCode: %d", resp.StatusCode)
+		return nil, fmt.Errorf("invalid StatusCode: %d, trace_id:%s", resp.StatusCode, resp.Header.Get("Trace-Id"))
 	}
 	res.ChatCompletionsResponse.TraceId = resp.Header.Get("Trace-Id")
 	return &res.ChatCompletionsResponse, err
