@@ -163,6 +163,11 @@ definitions:
         items:
           type: object
           $ref: '#/definitions/v1FunctionDefinition'
+      sampleMessages:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/v1Message'
   v1ChatCompletionsResponse:
     type: object
     properties:

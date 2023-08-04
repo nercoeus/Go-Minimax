@@ -64,6 +64,7 @@ message ChatCompletionsRequest {
   repeated BotSetting bot_setting = 13;
   ReplyConstraints reply_constraints = 14;
   repeated FunctionDefinition functions = 15;
+  repeated Message sample_messages = 16;
 }
 
 message FunctionCall {
