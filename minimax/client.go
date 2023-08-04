@@ -1,23 +1,27 @@
 package minimax
 
 import (
-	"github.com/imroc/req/v3"
-	"github.com/moul/http2curl"
 	"log"
 	"os"
+
+	"github.com/imroc/req/v3"
+	"github.com/moul/http2curl"
 )
 
 const minimaxBaseUrl = "https://api.minimax.chat"
+const minimaxBaseApiPath = "/v1/text/chatcompletion"
 
 type Client struct {
 	client   *req.Client
 	apiToken string
 	groupId  string
+	apiPath  string
 }
 
 func New(opts ...Option) (*Client, error) {
 	cli := &Client{
-		client: req.C().SetBaseURL(minimaxBaseUrl),
+		client:  req.C().SetBaseURL(minimaxBaseUrl),
+		apiPath: minimaxBaseApiPath,
 	}
 	//curl --location "https://api.minimax.chat/v1/text/chatcompletion?GroupId=${group_id}" \
 

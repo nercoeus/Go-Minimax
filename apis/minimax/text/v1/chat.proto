@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package minimax.text.v1;
 
-option go_package = "github.com/ConnectAI-E/go-minimax/gen/go/minimax/text/v1;text";
+option go_package = "github.com/nercoeus/go-minimax/gen/go/minimax/text/v1;text";
 option java_multiple_files = true;
 option java_outer_classname = "minimaxProto";
 option java_package = "com.qiniai.minimax.text.v1";
@@ -15,11 +15,23 @@ message Message {
   string sender_type = 1;
   // 对话内容，不能为空。
   string text = 2;
+  string sender_name = 3;
+  FunctionCall function_call = 4;
 }
 
 message RoleMeta {
   string user_name = 1;
   string bot_name = 2;
+}
+
+message BotSetting {
+  string bot_name = 1;
+  string content = 2;
+}
+
+message ReplyConstraints {
+  string sender_type = 1;
+  string sender_name = 2;
 }
 
 message ChatCompletionsRequest {
@@ -48,8 +60,33 @@ message ChatCompletionsRequest {
   float top_p = 10;
   //    对输出中易涉及隐私问题的文本信息进行脱敏，目前包括但不限于邮箱、域名、链接、证件号、家庭住址等，默认false，即开启脱敏 默认false
   bool skip_info_mask = 11;
+  int32 tokens_to_generate = 12;
+  repeated BotSetting bot_setting = 13;
+  ReplyConstraints reply_constraints = 14;
+  repeated FunctionDefinition functions = 15;
+  repeated Message sample_messages = 16;
 }
 
+message FunctionCall {
+	string name = 1;
+	string arguments = 2;
+}
+
+message Parameters {
+  string title = 1;
+	string type = 2;
+  string description = 3;
+  map<string, Parameters> properties = 4;
+	repeated string enum = 5;
+	repeated string required = 6;
+	Parameters items = 7;
+}
+
+message FunctionDefinition {
+	string name = 1;
+	string description = 2;
+	Parameters parameters = 3;
+}
 
 message Choice {
   //文本结果
@@ -57,7 +94,7 @@ message Choice {
   //排名
   int64 index = 2;
   // 分数
-  int64 logprobes = 3;
+  double logprobes = 3;
   //结束原因，枚举值
   //stop：API返回了模型生成的完整结果
   //length：模型生成结果超过tokens_to_generate的长度，内容被截断
@@ -67,6 +104,7 @@ message Choice {
   string emotion = 5;
   //当request.stream为true，处于流式模式下，回复文本通过delta给出
   string delta = 6;
+  repeated Message messages = 7;
 }
 
 message Usage {
@@ -107,5 +145,6 @@ message ChatCompletionsResponse {
   bool output_sensitive = 7;
   //错误状态码和详情
   BaseResponse base_resp = 8;
-
+  FunctionCall function_call = 9;
+  string trace_id = 10;
 }

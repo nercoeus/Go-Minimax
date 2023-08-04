@@ -33,3 +33,13 @@ func WithGroupId(groupId string) Option {
 		return nil
 	}
 }
+
+func WithApiPath(apiPath string) Option {
+	return func(cli *Client) error {
+		if len(apiPath) == 0 {
+			return errors.New("api path can not empty")
+		}
+		cli.apiPath = apiPath
+		return nil
+	}
+}

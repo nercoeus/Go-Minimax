@@ -5,9 +5,10 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"github.com/ConnectAI-E/go-minimax/pkg/errors"
 	"io"
 	"net/http"
+
+	"github.com/nercoeus/go-minimax/pkg/errors"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
@@ -18,6 +19,7 @@ var headerData = []byte("data: ")
 type StreamReader[T any] interface {
 	Recv() (response T, err error)
 	Close()
+	SetHeader(key string, val string)
 
 	grpc.ClientStream
 }
@@ -25,6 +27,7 @@ type StreamReader[T any] interface {
 type streamReader[T any] struct {
 	emptyMessagesLimit uint
 	isFinished         bool
+	header             metadata.MD
 
 	reader   *bufio.Reader
 	response *http.Response
@@ -79,17 +82,21 @@ func (stream *streamReader[T]) Close() {
 	stream.response.Body.Close()
 }
 
+func (stream *streamReader[T]) SetHeader(key string, val string) {
+	stream.header = metadata.Pairs(key, val)
+}
+
 // Header returns the header metadata received from the server if there
 // is any. It blocks if the metadata is not ready to read.
 func (stream *streamReader[T]) Header() (metadata.MD, error) {
-	return nil, nil
+	return stream.header, nil
 }
 
 // Trailer returns the trailer metadata from the server, if there is any.
 // It must only be called after stream.CloseAndRecv has returned, or
 // stream.Recv has returned a non-nil error (including io.EOF).
 func (stream *streamReader[T]) Trailer() metadata.MD {
-	return nil
+	return stream.header
 }
 
 // CloseSend closes the send direction of the stream. It closes the stream

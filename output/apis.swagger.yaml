@@ -94,6 +94,13 @@ definitions:
       statusMsg:
         type: string
         title: 错误详情
+  v1BotSetting:
+    type: object
+    properties:
+      botName:
+        type: string
+      content:
+        type: string
   v1ChatCompletionsRequest:
     type: object
     properties:
@@ -141,6 +148,26 @@ definitions:
       skipInfoMask:
         type: boolean
         title: 对输出中易涉及隐私问题的文本信息进行脱敏，目前包括但不限于邮箱、域名、链接、证件号、家庭住址等，默认false，即开启脱敏 默认false
+      tokensToGenerate:
+        type: integer
+        format: int32
+      botSetting:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/v1BotSetting'
+      replyConstraints:
+        $ref: '#/definitions/v1ReplyConstraints'
+      functions:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/v1FunctionDefinition'
+      sampleMessages:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/v1Message'
   v1ChatCompletionsResponse:
     type: object
     properties:
@@ -172,6 +199,10 @@ definitions:
       baseResp:
         $ref: '#/definitions/v1BaseResponse'
         title: 错误状态码和详情
+      functionCall:
+        $ref: '#/definitions/v1FunctionCall'
+      traceId:
+        type: string
   v1Choice:
     type: object
     properties:
@@ -183,8 +214,8 @@ definitions:
         format: int64
         title: 排名
       logprobes:
-        type: string
-        format: int64
+        type: number
+        format: double
         title: 分数
       finishReason:
         type: string
@@ -200,6 +231,27 @@ definitions:
       delta:
         type: string
         title: 当request.stream为true，处于流式模式下，回复文本通过delta给出
+      messages:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/v1Message'
+  v1FunctionCall:
+    type: object
+    properties:
+      name:
+        type: string
+      arguments:
+        type: string
+  v1FunctionDefinition:
+    type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      parameters:
+        $ref: '#/definitions/v1Parameters'
   v1Message:
     type: object
     properties:
@@ -212,6 +264,40 @@ definitions:
       text:
         type: string
         title: 对话内容，不能为空。
+      senderName:
+        type: string
+      functionCall:
+        $ref: '#/definitions/v1FunctionCall'
+  v1Parameters:
+    type: object
+    properties:
+      title:
+        type: string
+      type:
+        type: string
+      description:
+        type: string
+      properties:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/v1Parameters'
+      enum:
+        type: array
+        items:
+          type: string
+      required:
+        type: array
+        items:
+          type: string
+      items:
+        $ref: '#/definitions/v1Parameters'
+  v1ReplyConstraints:
+    type: object
+    properties:
+      senderType:
+        type: string
+      senderName:
+        type: string
   v1RoleMeta:
     type: object
     properties:

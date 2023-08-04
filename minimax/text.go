@@ -3,10 +3,12 @@ package minimax
 import (
 	"context"
 	"errors"
-	textv1 "github.com/ConnectAI-E/go-minimax/gen/go/minimax/text/v1"
-	"github.com/ConnectAI-E/go-minimax/internal"
-	"google.golang.org/grpc"
+	"fmt"
 	"io"
+
+	textv1 "github.com/nercoeus/go-minimax/gen/go/minimax/text/v1"
+	"github.com/nercoeus/go-minimax/internal"
+	"google.golang.org/grpc"
 )
 
 var _ textv1.MinimaxServiceClient = new(Client)
@@ -20,15 +22,15 @@ func (cli *Client) ChatCompletions(ctx context.Context, in *textv1.ChatCompletio
 	resp, err := cli.client.R().
 		SetBody(in).
 		SetSuccessResult(res).
-		Post("/v1/text/chatcompletion")
+		Post(cli.apiPath)
 	if err != nil {
 		return nil, err
 	}
 
 	if resp.StatusCode != 200 {
-		return nil, err
+		return nil, fmt.Errorf("invalid StatusCode: %d, trace_id:%s", resp.StatusCode, resp.Header.Get("Trace-Id"))
 	}
-
+	res.ChatCompletionsResponse.TraceId = resp.Header.Get("Trace-Id")
 	return &res.ChatCompletionsResponse, err
 }
 
@@ -39,7 +41,7 @@ func (cli *Client) ChatCompletionStream(ctx context.Context, in *textv1.ChatComp
 	resp, err := cli.client.R().
 		DisableAutoReadResponse().
 		SetBody(in).
-		Post("/v1/text/chatcompletion")
+		Post(cli.apiPath)
 
 	if resp.StatusCode != 200 {
 		body, err := io.ReadAll(resp.Body)
@@ -48,6 +50,7 @@ func (cli *Client) ChatCompletionStream(ctx context.Context, in *textv1.ChatComp
 		}
 		return nil, errors.New(string(body))
 	}
-
-	return internal.NewStreamReader[*textv1.ChatCompletionsResponse](resp.Body), err
+	result := internal.NewStreamReader[*textv1.ChatCompletionsResponse](resp.Body)
+	result.SetHeader("Trace-Id", resp.Header.Get("Trace-Id"))
+	return result, err
 }

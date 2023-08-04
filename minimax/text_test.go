@@ -3,9 +3,10 @@ package minimax
 import (
 	"context"
 	"fmt"
-	textv1 "github.com/ConnectAI-E/go-minimax/gen/go/minimax/text/v1"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	textv1 "github.com/nercoeus/go-minimax/gen/go/minimax/text/v1"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestClient_ChatCompletions(t *testing.T) {
