@@ -203,6 +203,13 @@ definitions:
         $ref: '#/definitions/v1FunctionCall'
       traceId:
         type: string
+      inputSensitiveType:
+        type: string
+        format: int64
+        title: 1 严重违规 2 色情 3 广告 4 违禁 5 谩骂 6 暴恐 7 其他
+      outputSensitiveType:
+        type: string
+        format: int64
   v1Choice:
     type: object
     properties:

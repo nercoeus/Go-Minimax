@@ -147,4 +147,7 @@ message ChatCompletionsResponse {
   BaseResponse base_resp = 8;
   FunctionCall function_call = 9;
   string trace_id = 10;
+  // 1 严重违规 2 色情 3 广告 4 违禁 5 谩骂 6 暴恐 7 其他
+  int64 input_sensitive_type = 11;
+  int64 output_sensitive_type = 12;
 }
