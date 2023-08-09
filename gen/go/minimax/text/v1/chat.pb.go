@@ -295,7 +295,7 @@ type ChatCompletionsRequest struct {
 	ReplyConstraints  *ReplyConstraints     `protobuf:"bytes,14,opt,name=reply_constraints,json=replyConstraints,proto3" json:"reply_constraints,omitempty"`
 	Functions         []*FunctionDefinition `protobuf:"bytes,15,rep,name=functions,proto3" json:"functions,omitempty"`
 	SampleMessages    []*Message            `protobuf:"bytes,16,rep,name=sample_messages,json=sampleMessages,proto3" json:"sample_messages,omitempty"`
-	MaskSensitiveInfo bool                  `protobuf:"varint,17,opt,name=mask_sensitive_info,json=maskSensitiveInfo,proto3" json:"mask_sensitive_info,omitempty"` // for minimax_pro api
+	MaskSensitiveInfo bool                  `protobuf:"varint,17,opt,name=mask_sensitive_info,json=maskSensitiveInfo,proto3" json:"mask_sensitive_info"` // for minimax_pro api
 }
 
 func (x *ChatCompletionsRequest) Reset() {
