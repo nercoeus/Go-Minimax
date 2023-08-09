@@ -65,6 +65,7 @@ message ChatCompletionsRequest {
   ReplyConstraints reply_constraints = 14;
   repeated FunctionDefinition functions = 15;
   repeated Message sample_messages = 16;
+  bool mask_sensitive_info = 17; // for minimax_pro api
 }
 
 message FunctionCall {

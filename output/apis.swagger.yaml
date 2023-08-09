@@ -168,6 +168,9 @@ definitions:
         items:
           type: object
           $ref: '#/definitions/v1Message'
+      maskSensitiveInfo:
+        type: boolean
+        title: for minimax_pro api
   v1ChatCompletionsResponse:
     type: object
     properties:
